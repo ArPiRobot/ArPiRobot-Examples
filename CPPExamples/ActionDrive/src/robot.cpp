@@ -16,6 +16,8 @@ void Robot::robotStarted(){
     flmotor.setInverted(true);
     frmotor.setInverted(true);
 
+    // Start this action when the robot starts
+    // It will keep running unless interrupted
     ActionManager::startAction(&jsDriveAction);
 }
 

@@ -10,7 +10,7 @@ using namespace arpirobot;
 
 
 void Robot::robotStarted(){
-    // Each sensor is configured, but not associated with an arduino yet.
+    // Each sensor is instantiated, but not associated with an arduino yet.
     // Each sensor must be added to exactly one arduino interface.
     // A sensor should not be added to multiple arduinos
     // All sensors must be added before starting the arduino interface

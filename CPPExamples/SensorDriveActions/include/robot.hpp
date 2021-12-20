@@ -74,6 +74,9 @@ public:
     SingleEncoder rencoder {3, false};
     Mpu6050Imu imu;
 
+    // Status LED connected to raspberry pi GPIO #12
+    StatusLED statusLed { 12 };
+
     ////////////////////////////////////////////////////////////////////////////
     /// Actions
     ////////////////////////////////////////////////////////////////////////////
@@ -89,15 +92,15 @@ public:
     ActionSeries autoSequence {
         // This is a list of actions to run sequentially
         {
-            &driveTwoFeetAction,      // Drive 2 ft forward
+            &driveTwoFeetAction,        // Drive 2 ft forward
             &wait250Action,             // Wait a short amount of time so brake mode works
             &rotatePos90Action,         // Rotate 90 degrees
             &wait250Action,             // Wait a short amount of time so brake mode works
-            &driveTwoFeetAction,      // Drive 2 ft forward
+            &driveTwoFeetAction,        // Drive 2 ft forward
             &wait250Action,             // Wait a short amount of time so brake mode works
             &rotateNeg270Action,        // Rotate -270 degrees
             &wait250Action,             // Wait a short amount of time so brake mode works
-            &driveTwoFeetAction,      // Drive 2 ft forward
+            &driveTwoFeetAction,        // Drive 2 ft forward
             &wait250Action              // Wait a short amount of time so brake mode works
         },     
 

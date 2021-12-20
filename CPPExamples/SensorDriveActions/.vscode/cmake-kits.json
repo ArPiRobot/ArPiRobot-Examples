@@ -1,0 +1,6 @@
+[
+    {
+        "name": "Raspberry Pi Toolchain",
+        "toolchainFile": "${workspaceFolder}/arpirobot-cross.cmake"
+    }
+]

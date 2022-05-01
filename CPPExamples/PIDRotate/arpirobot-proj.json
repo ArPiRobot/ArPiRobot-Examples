@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "deployFiles": [
+        "build/robot",
+        "main.sh"
+    ],
+    "coreLibFiles": [
+        "lib/*.so"
+    ]
+}

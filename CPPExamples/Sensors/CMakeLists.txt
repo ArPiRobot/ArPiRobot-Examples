@@ -20,6 +20,10 @@ file (GLOB_RECURSE SOURCES
 add_executable(robot ${SOURCES})
 target_link_libraries(robot arpirobot-core pthread)
 
+if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") OR ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows") OR ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin"))
+     target_link_libraries(robot serial)
+endif()
+
 if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") AND ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "arm"))
      target_link_libraries(robot pigpio)
 endif()

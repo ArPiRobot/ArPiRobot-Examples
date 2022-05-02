@@ -24,7 +24,7 @@ void Robot::robotStarted(){
     // Run slightly faster for better PID performance
     rotateAct.setProcessPeriodMs(20);
 
-    // Populate initial PID paremeters on network table
+    // Populate initial PID parameters on network table
     // These can be edited at runtime in the drive station
     NetworkTable::set(ROTATE_KP_KEY, std::to_string(rotatePid.getKp()));
     NetworkTable::set(ROTATE_KI_KEY, std::to_string(rotatePid.getKi()));
@@ -66,7 +66,7 @@ void Robot::periodic(){
     // Update target angle periodically (keep up to date)
     NetworkTable::set(ROTATE_TARGET_KEY, std::to_string(rotatePid.getSetpoint()));
 
-    // Inidicate to user when rotate PID is active (via action)
+    // Indicate to user when rotate PID is active (via action)
     if(rotateAct.isRunning())
         NetworkTable::set(ROTATE_ACTIVE_KEY, "true");
     else

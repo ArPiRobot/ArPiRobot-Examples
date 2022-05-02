@@ -39,7 +39,7 @@ void JSDriveAction::finish(bool wasInterrupted){
 }
 
 bool JSDriveAction::shouldContinue(){
-    // This action will not stop on itself
+    // This action will not stop on its own
     return true;
 }
 
@@ -93,8 +93,8 @@ void RotateAction::finish(bool wasInterrupted){
 bool RotateAction::shouldContinue(){
     if(std::abs(Main::robot->imu.getGyroZ() - Main::robot->rotatePid.getSetpoint()) <= 3.0){
         // If within 3 degrees of target increment counter
-        // 3 degree tolerence works well experimentally
-        // Do not use too small of a tolerence or IMU drift may cause values
+        // 3 degree tolerance works well experimentally
+        // Do not use too small of a tolerance or IMU drift may cause values
         correctCounter++;
     }else{
         // Reset counter when no longer correct angle

@@ -6,6 +6,7 @@
 
 // Other includes (for devices and other objects) here
 #include <arpirobot/core/control/PID.hpp>
+#include <arpirobot/core/action/ActionSeries.hpp>
 #include <arpirobot/devices/adafruitmotorhat/AdafruitMotorHatMotor.hpp>
 #include <arpirobot/core/drive/ArcadeDriveHelper.hpp>
 #include <arpirobot/devices/gamepad/Gamepad.hpp>
@@ -83,8 +84,11 @@ public:
     JSDriveAction jsdriveAct;
     RotateAction rotateAct {90};
 
+    // Action series
+    ActionSeries rotateSer {{&rotateAct}, &jsdriveAct};
+
     // Button triggers to run actions on button presses
-    ButtonPressedTrigger rotateTrigger {&gp0, ROTATE_BTN, &rotateAct};
+    ButtonPressedTrigger rotateTrigger {&gp0, ROTATE_BTN, &rotateSer};
 
     // Network table keys
     const std::string ROTATE_KP_KEY = "Rotate kP";

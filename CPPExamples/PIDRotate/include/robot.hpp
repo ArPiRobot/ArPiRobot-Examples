@@ -5,6 +5,7 @@
 #include <actions.hpp>
 
 // Other includes (for devices and other objects) here
+#include <arpirobot/core/control/PID.hpp>
 #include <arpirobot/devices/adafruitmotorhat/AdafruitMotorHatMotor.hpp>
 #include <arpirobot/core/drive/ArcadeDriveHelper.hpp>
 #include <arpirobot/devices/gamepad/Gamepad.hpp>
@@ -84,4 +85,15 @@ public:
 
     // Button triggers to run actions on button presses
     ButtonPressedTrigger rotateTrigger {&gp0, ROTATE_BTN, &rotateAct};
+
+    // Network table keys
+    const std::string ROTATE_KP_KEY = "Rotate kP";
+    const std::string ROTATE_KI_KEY = "Rotate kI";
+    const std::string ROTATE_KD_KEY = "Rotate kD";
+    const std::string IMU_Z_ANGLE_KEY = "Current Angle";
+    const std::string ROTATE_TARGET_KEY = "Target Angle";
+    const std::string ROTATE_ACTIVE_KEY = "Rotate Active";
+
+    // PID used when rotating the robot (used by action)
+    PID rotatePid {0.1, 0.0001, 0.01};
 };

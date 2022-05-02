@@ -60,17 +60,15 @@ void RotateAction::begin(){
     lockDevices({&Main::robot->flmotor, &Main::robot->frmotor, 
             &Main::robot->rlmotor, &Main::robot->rrmotor});
 
-    // Brake mode helps prevent oscillations
-    Main::robot->setBrakeMode(true);
-
     // Reset correct counter
     correctCounter = 0;
 
-    // Clear old state info
-    pid.reset();
+    // Brake mode helps prevent oscillations
+    Main::robot->setBrakeMode(true);
 
-    // Set the "target" degrees more than the current angle
-    pid.setSetpoint(Main::robot->imu.getGyroZ() + degrees);
+    // Configure rotate PID
+    Main::robot->rotatePid.reset();
+    Main::robot->rotatePid.setSetpoint(Main::robot->imu.getGyroZ() + degrees);
 
     // No forward / reverse motion during this action
     Main::robot->driveHelper.updateSpeed(0);
@@ -78,10 +76,10 @@ void RotateAction::begin(){
 
 void RotateAction::process(){
     // Calculate current output power given current angle
-    double power = pid.getOutput(Main::robot->imu.getGyroZ());
+    double power = Main::robot->rotatePid.getOutput(Main::robot->imu.getGyroZ());
 
     // Update rotation based on pid output power
-    Main::robot->driveHelper.updateRotation(power);
+    Main::robot->driveHelper.updateRotation(-power);
 }
 
 void RotateAction::finish(bool wasInterrupted){
@@ -93,15 +91,17 @@ void RotateAction::finish(bool wasInterrupted){
 }
 
 bool RotateAction::shouldContinue(){
-    if(std::abs(Main::robot->imu.getGyroZ() - pid.getSetpoint())){
-        // If within 1 degree of target increment counter
+    if(std::abs(Main::robot->imu.getGyroZ() - Main::robot->rotatePid.getSetpoint()) <= 3.0){
+        // If within 3 degrees of target increment counter
+        // 3 degree tolerence works well experimentally
+        // Do not use too small of a tolerence or IMU drift may cause values
         correctCounter++;
     }else{
         // Reset counter when no longer correct angle
         correctCounter = 0;
     }
 
-    // Stop if the angle has been correct for the past 20 iterations
-    // Continue if counter less than 20 (should not stop)
-    return correctCounter < 20;
+    // Stop if the angle has been correct for the past 10 iterations
+    // Continue if counter less than 10 (should not stop)
+    return correctCounter < 10;
 }

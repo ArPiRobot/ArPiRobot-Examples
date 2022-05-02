@@ -1,7 +1,6 @@
 #pragma once
 
 #include <arpirobot/core/action/Action.hpp>
-#include <arpirobot/core/control/PID.hpp>
 
 using namespace arpirobot;
 
@@ -56,5 +55,4 @@ protected:
 private:
     int correctCounter;
     double degrees;
-    PID pid {};  
 };

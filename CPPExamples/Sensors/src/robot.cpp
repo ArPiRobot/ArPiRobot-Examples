@@ -57,6 +57,8 @@ void Robot::periodic(){
     // This can be viewed in the drive station
     NetworkTable::set("L Pos", std::to_string(lencoder.getPosition()));
     NetworkTable::set("R Pos", std::to_string(rencoder.getPosition()));
+    NetworkTable::set("L Vel", std::to_string(lencoder.getVelocity()));
+    NetworkTable::set("R Vel", std::to_string(rencoder.getVelocity()));
     NetworkTable::set("Gyro Z", std::to_string(imu.getGyroZ()));
     NetworkTable::set("Accel Y", std::to_string(imu.getAccelY()));
     NetworkTable::set("US Dist", std::to_string(usonic.getDistance()));

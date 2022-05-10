@@ -40,10 +40,6 @@ class Robot(BaseRobot):
         # Gamepads
         self.gp0 = Gamepad(0)
 
-        # Axis transforms
-        self.drive_axis_transform = CubicAxisTransform(0, 0.5)
-        self.rotate_axis_transform = SquareRootAxisTransform()
-
         # Axis numbers
         self.DRIVE_AXIS = 1
         self.ROTATE_AXIS = 2
@@ -62,9 +58,6 @@ class Robot(BaseRobot):
 
         # Action series
         self.rotate_ser = ActionSeries([self.rotate_act], self.js_drive_act)
-
-        # Button triggers to run actions on button presses
-        self.rotate_trigger = ButtonPressedTrigger(self.gp0, self.ROTATE_BTN, self.rotate_ser)
 
         # Netwrok table keys
         self.ROTATE_KP_KEY = "Rotate kP"
@@ -87,8 +80,8 @@ class Robot(BaseRobot):
         self.imu.calibrate(10)
 
         # Setup axis transforms
-        self.gp0.set_axis_transform(self.DRIVE_AXIS, self.drive_axis_transform)
-        self.gp0.set_axis_transform(self.ROTATE_AXIS, self.rotate_axis_transform)
+        self.gp0.set_axis_transform(self.DRIVE_AXIS, CubicAxisTransform(0, 0.5))
+        self.gp0.set_axis_transform(self.ROTATE_AXIS, SquareRootAxisTransform())
 
         # Fix motor directions (as needed, depends on wiring)
         self.flmotor.set_inverted(True)
@@ -108,7 +101,7 @@ class Robot(BaseRobot):
         # The rotate action kills js drive by locking the 
         # same devices. When rotate is done, js drive is 
         # restarted to allow more driving
-        ActionManager.add_trigger(self.rotate_trigger)
+        ActionManager.add_trigger(ButtonPressedTrigger(self.gp0, self.ROTATE_BTN, self.rotate_ser))
 
 
     def robot_enabled(self):

@@ -31,10 +31,6 @@ class Robot(BaseRobot):
         # Gamepads
         self.gp0 = Gamepad(0)
 
-        # Axis transforms
-        self.drive_axis_transform = CubicAxisTransform(0, 0.5)
-        self.rotate_axis_transform = SquareRootAxisTransform()
-
         # Axis numbers
         self.DRIVE_AXIS = 1
         self.ROTATE_AXIS = 2
@@ -44,16 +40,12 @@ class Robot(BaseRobot):
         # enough as a zero to prevent trying to move the motors very slowly
         self.DEADBAND = 0.1
 
-        # Action instances
-        self.js_drive_action = JSDriveAction()
-
-
     def robot_started(self):
         # Run once when the robot starts
         
         # Setup axis transforms
-        self.gp0.set_axis_transform(self.DRIVE_AXIS, self.drive_axis_transform)
-        self.gp0.set_axis_transform(self.ROTATE_AXIS, self.rotate_axis_transform)
+        self.gp0.set_axis_transform(self.DRIVE_AXIS, CubicAxisTransform(0, 0.5))
+        self.gp0.set_axis_transform(self.ROTATE_AXIS, SquareRootAxisTransform())
 
         # Fix motor directions (as needed, depends on wiring)
         self.flmotor.set_inverted(True)
@@ -61,7 +53,7 @@ class Robot(BaseRobot):
 
         # Start this action when the robot starts
         # It will keep running unless interrupted
-        ActionManager.start_action(self.js_drive_action)
+        ActionManager.start_action(JSDriveAction())
 
     def robot_enabled(self):
         # Runs once each time the robot becomes enabled

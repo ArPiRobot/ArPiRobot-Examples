@@ -30,10 +30,6 @@ class Robot(BaseRobot):
         # Gamepads
         self.gp0 = Gamepad(0)
 
-        # Axis transforms
-        self.drive_axis_transform = CubicAxisTransform(0, 0.5)
-        self.rotate_axis_transform = SquareRootAxisTransform()
-
         # Axis numbers
         self.DRIVE_AXIS = 1
         self.ROTATE_AXIS = 2
@@ -47,8 +43,8 @@ class Robot(BaseRobot):
         # Run once when the robot starts
         
         # Setup axis transforms
-        self.gp0.set_axis_transform(self.DRIVE_AXIS, self.drive_axis_transform)
-        self.gp0.set_axis_transform(self.ROTATE_AXIS, self.rotate_axis_transform)
+        self.gp0.set_axis_transform(self.DRIVE_AXIS, CubicAxisTransform(0, 0.5))
+        self.gp0.set_axis_transform(self.ROTATE_AXIS, SquareRootAxisTransform())
 
         # Fix motor directions (as needed, depends on wiring)
         self.flmotor.set_inverted(True)

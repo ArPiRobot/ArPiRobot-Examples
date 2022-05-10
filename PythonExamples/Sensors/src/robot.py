@@ -104,6 +104,8 @@ class Robot(BaseRobot):
         # This can be viewed in the drive station
         NetworkTable.set("L Pos", str(self.lencoder.get_position()))
         NetworkTable.set("R Pos", str(self.rencoder.get_position()))
+        NetworkTable.set("L Vel", str(self.lencoder.get_velocity()))
+        NetworkTable.set("R Vel", str(self.rencoder.get_velocity()))
         NetworkTable.set("Gyro Z", str(self.imu.get_gyro_z()))
         NetworkTable.set("Accel Y", str(self.imu.get_accel_y()))
         NetworkTable.set("US Dist", str(self.usonic.get_distance()))

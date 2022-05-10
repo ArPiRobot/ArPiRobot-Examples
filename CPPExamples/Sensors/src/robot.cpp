@@ -14,13 +14,13 @@ void Robot::robotStarted(){
     // Each sensor must be added to exactly one arduino interface.
     // A sensor should not be added to multiple arduinos
     // All sensors must be added before starting the arduino interface
-    arduino.addDevice(&vmon);
-    arduino.addDevice(&lencoder);
-    arduino.addDevice(&rencoder);
-    arduino.addDevice(&imu);
-    arduino.addDevice(&usonic);
-    arduino.addDevice(&ldetector);
-    arduino.addDevice(&rdetector);
+    arduino.addDevice(vmon);
+    arduino.addDevice(lencoder);
+    arduino.addDevice(rencoder);
+    arduino.addDevice(imu);
+    arduino.addDevice(usonic);
+    arduino.addDevice(ldetector);
+    arduino.addDevice(rdetector);
 
     // Start the arduino that this interface communicates with
     // Once begin has been called the arduino will start providing sensor data

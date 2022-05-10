@@ -123,10 +123,6 @@ public:
     // Gamepads
     Gamepad gp0 {0};
 
-    // Axis transforms
-    CubicAxisTransform driveAxisTransform {0, 0.5};
-    SquareRootAxisTransform rotateAxisTransform;
-
     // Gamepad action triggers
     ButtonPressedTrigger autoTrigger { gp0, AUTO_BUTTON, autoSequence };
 };

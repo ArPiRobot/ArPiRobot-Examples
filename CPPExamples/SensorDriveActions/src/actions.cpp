@@ -10,8 +10,8 @@ using namespace arpirobot;
 
 void JSDriveAction::begin(){
     // This action needs exclusive control of motors
-    lockDevices({&Main::robot->flmotor, &Main::robot->frmotor, 
-            &Main::robot->rlmotor, &Main::robot->rrmotor});
+    lockDevices({Main::robot->flmotor, Main::robot->frmotor, 
+            Main::robot->rlmotor, Main::robot->rrmotor});
 
     // Driving is more natural in coast mode
     Main::robot->setBrakeMode(false);
@@ -48,8 +48,8 @@ DriveDistanceAction::DriveDistanceAction(double driveSpeed, int encoderTicks, in
 
 void DriveDistanceAction::begin(){
     // This action needs exclusive control of motors
-    lockDevices({&Main::robot->flmotor, &Main::robot->frmotor, 
-            &Main::robot->rlmotor, &Main::robot->rrmotor});
+    lockDevices({Main::robot->flmotor, Main::robot->frmotor, 
+            Main::robot->rlmotor, Main::robot->rrmotor});
     
     // Store the time this action started
     startTime = std::chrono::steady_clock::now();
@@ -130,8 +130,8 @@ RotateDegreesAction::RotateDegreesAction(double rotationSpeed, double degrees, i
 
 void RotateDegreesAction::begin(){  
     // This action needs exclusive control of motors
-    lockDevices({&Main::robot->flmotor, &Main::robot->frmotor, 
-            &Main::robot->rlmotor, &Main::robot->rrmotor});
+    lockDevices({Main::robot->flmotor, Main::robot->frmotor, 
+            Main::robot->rlmotor, Main::robot->rrmotor});
 
     // Store start time and angle
     startTime = std::chrono::steady_clock::now();

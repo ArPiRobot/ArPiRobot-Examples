@@ -11,7 +11,7 @@
 #include <arpirobot/devices/gamepad/Gamepad.hpp>
 #include <arpirobot/devices/gamepad/ButtonPressedTrigger.hpp>
 #include <arpirobot/devices/adafruitmotorhat/AdafruitMotorHatMotor.hpp>
-#include <arpirobot/devices/gpio/StatusLed.hpp>
+#include <arpirobot/devices/gpio/StatusLED.hpp>
 
 #include <arpirobot/arduino/iface/ArduinoUartInterface.hpp>
 #include <arpirobot/arduino/sensor/VoltageMonitor.hpp>
@@ -63,7 +63,7 @@ public:
     AdafruitMotorHatMotor rrmotor {1};
 
     // Drive helper
-    ArcadeDriveHelper driveHelper {{&flmotor, &rlmotor}, {&frmotor, &rrmotor}};
+    ArcadeDriveHelper driveHelper {{flmotor, rlmotor}, {frmotor, rrmotor}};
 
     // Arduino interface
     ArduinoUartInterface arduino {"/dev/ttyUSB0", 57600};
@@ -92,20 +92,20 @@ public:
     ActionSeries autoSequence {
         // This is a list of actions to run sequentially
         {
-            &driveTwoFeetAction,        // Drive 2 ft forward
-            &wait250Action,             // Wait a short amount of time so brake mode works
-            &rotatePos90Action,         // Rotate 90 degrees
-            &wait250Action,             // Wait a short amount of time so brake mode works
-            &driveTwoFeetAction,        // Drive 2 ft forward
-            &wait250Action,             // Wait a short amount of time so brake mode works
-            &rotateNeg270Action,        // Rotate -270 degrees
-            &wait250Action,             // Wait a short amount of time so brake mode works
-            &driveTwoFeetAction,        // Drive 2 ft forward
-            &wait250Action              // Wait a short amount of time so brake mode works
+            driveTwoFeetAction,         // Drive 2 ft forward
+            wait250Action,              // Wait a short amount of time so brake mode works
+            rotatePos90Action,          // Rotate 90 degrees
+            wait250Action,              // Wait a short amount of time so brake mode works
+            driveTwoFeetAction,         // Drive 2 ft forward
+            wait250Action,              // Wait a short amount of time so brake mode works
+            rotateNeg270Action,         // Rotate -270 degrees
+            wait250Action,              // Wait a short amount of time so brake mode works
+            driveTwoFeetAction,         // Drive 2 ft forward
+            wait250Action               // Wait a short amount of time so brake mode works
         },     
 
         // This action will run after the action series finishes     
-        &jsDriveAction                  // When done, drive with joysticks again
+        jsDriveAction                   // When done, drive with joysticks again
     };
 
     ////////////////////////////////////////////////////////////////////////////
@@ -128,5 +128,5 @@ public:
     SquareRootAxisTransform rotateAxisTransform;
 
     // Gamepad action triggers
-    ButtonPressedTrigger autoTrigger { &gp0, AUTO_BUTTON, &autoSequence };
+    ButtonPressedTrigger autoTrigger { gp0, AUTO_BUTTON, autoSequence };
 };

@@ -9,8 +9,8 @@ using namespace arpirobot;
 
 void Robot::robotStarted(){
     // Setup axis transforms
-    gp0.setAxisTransform(DRIVE_AXIS, &driveAxisTransform);
-    gp0.setAxisTransform(ROTATE_AXIS, &rotateAxisTransform);
+    gp0.setAxisTransform(DRIVE_AXIS, std::make_shared<CubicAxisTransform>(0, 0.5));
+    gp0.setAxisTransform(ROTATE_AXIS, std::make_shared<SquareRootAxisTransform>());
 
     // Fix motor directions (as needed, depends on wiring)
     flmotor.setInverted(true);
@@ -18,7 +18,7 @@ void Robot::robotStarted(){
 
     // Start this action when the robot starts
     // It will keep running unless interrupted
-    ActionManager::startAction(&jsDriveAction);
+    ActionManager::startAction(std::make_shared<JSDriveAction>());
 }
 
 void Robot::robotEnabled(){

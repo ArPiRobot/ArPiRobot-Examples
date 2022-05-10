@@ -45,14 +45,10 @@ public:
 
     // Drive helper. Takes a speed and rotation and calculates motor speeds.
     // Configure the drive helper to control all four drive motors
-    ArcadeDriveHelper driveHelper {{&flmotor, &rlmotor}, {&frmotor, &rrmotor}};
+    ArcadeDriveHelper driveHelper {{flmotor, rlmotor}, {frmotor, rrmotor}};
 
     // Gamepads
     Gamepad gp0 {0};
-
-    // Axis transforms
-    CubicAxisTransform driveAxisTransform {0, 0.5};
-    SquareRootAxisTransform rotateAxisTransform;
 
     // Axis numbers
     const int DRIVE_AXIS = 1;

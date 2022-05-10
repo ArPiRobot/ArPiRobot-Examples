@@ -9,13 +9,13 @@ using namespace arpirobot;
 
 void Robot::robotStarted(){
     // Setup arduino and IMU
-    arduino.addDevice(&imu);
+    arduino.addDevice(imu);
     arduino.begin();
     imu.calibrate(10);
 
     // Setup axis transforms
-    gp0.setAxisTransform(DRIVE_AXIS, &driveAxisTransform);
-    gp0.setAxisTransform(ROTATE_AXIS, &rotateAxisTransform);
+    gp0.setAxisTransform(DRIVE_AXIS, std::make_shared<CubicAxisTransform>(0, 0.5));
+    gp0.setAxisTransform(ROTATE_AXIS, std::make_shared<SquareRootAxisTransform>());
 
     // Fix motor directions (as needed, depends on wiring)
     flmotor.setInverted(true);
@@ -35,21 +35,21 @@ void Robot::robotStarted(){
     // The rotate action kills js drive by locking the 
     // same devices. When rotate is done, js drive is 
     // restarted to allow more driving
-    ActionManager::addTrigger(&rotateTrigger);
+    ActionManager::addTrigger(std::make_shared<ButtonPressedTrigger>(gp0, ROTATE_BTN, rotateSer));
 }
 
 void Robot::robotEnabled(){
     if(!jsdriveAct.isRunning())
-        ActionManager::startAction(&jsdriveAct);
+        ActionManager::startAction(jsdriveAct);
 }
 
 void Robot::robotDisabled(){
-    ActionManager::stopAction(&rotateAct);
-    ActionManager::stopAction(&jsdriveAct);
+    ActionManager::stopAction(rotateSer);
+    ActionManager::stopAction(jsdriveAct);
 }
 
 void Robot::enabledPeriodic(){
-
+    
 }
 
 void Robot::disabledPeriodic(){

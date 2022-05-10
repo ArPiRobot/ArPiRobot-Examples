@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 3.0)
 project (ArPiRobot-UserRobot)
+set(CMAKE_CXX_STANDARD 14)
 
 if(CMAKE_HOST_WIN32)
 	set(HOMEDIR $ENV{UserProfile})

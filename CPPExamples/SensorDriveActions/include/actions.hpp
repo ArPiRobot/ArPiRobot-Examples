@@ -12,9 +12,14 @@ using namespace arpirobot;
  * control of a device that this action used
  */
 class JSDriveAction : public Action {
+public:
+    JSDriveAction();
+
 protected:
+    // Returns a list of devices this action should take exclusive control of
+    LockedDeviceList lockedDevices() override;
+
     // Run when the action is started. 
-    // If an action needs exclusive control of devices, lock them here
     void begin() override;
 
     // Run periodically while the action is running
@@ -39,8 +44,10 @@ public:
     DriveDistanceAction(double driveSpeed, int encoderTicks, int timeoutMs);
 
 protected:
+    // Returns a list of devices this action should take exclusive control of
+    LockedDeviceList lockedDevices() override;
+
     // Run when the action is started. 
-    // If an action needs exclusive control of devices, lock them here
     void begin() override;
 
     // Run periodically while the action is running
@@ -72,7 +79,6 @@ public:
 
 protected:
     // Run when the action is started. 
-    // If an action needs exclusive control of devices, lock them here
     void begin() override;
 
     // Run periodically while the action is running
@@ -101,8 +107,10 @@ public:
     RotateDegreesAction(double rotationSpeed, double degrees, int timeoutMs);
 
 protected:
+    // Returns a list of devices this action should take exclusive control of
+    LockedDeviceList lockedDevices() override;
+
     // Run when the action is started. 
-    // If an action needs exclusive control of devices, lock them here
     void begin() override;
 
     // Run periodically while the action is running

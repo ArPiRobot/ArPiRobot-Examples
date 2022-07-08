@@ -1,11 +1,11 @@
-from arpirobot.core.action import Action
+from arpirobot.core.action import Action, LockedDeviceList
 from arpirobot.core.log import Logger
 import main
 import time
 
 
 # Create actions here
-# Each action must have 4 functions. Use the template below.
+# Each action must have 4 functions.
 # You can refer to the current instance of your Robot class using main.robot
 
 
@@ -16,13 +16,14 @@ class JSDriveAction(Action):
     interrupted either by using ActionManager::stopAction or if another action is started that takes
     control of a device that this action used
     """
+
+    def locked_devices(self) -> LockedDeviceList:
+        # Returns a list of devices this action should take exclusive control of
+        return [main.robot.flmotor, main.robot.frmotor, 
+                main.robot.rlmotor, main.robot.rrmotor]
+
     def begin(self):
-        # Run when the action is started
-        # If an action needs exclusive control of devices, lock them here
-        
-        # This action needs exclusive control of motors
-        self.lock_devices([main.robot.flmotor, main.robot.frmotor, 
-                main.robot.flmotor, main.robot.rrmotor])
+        # Run when the action is started        
         
         # Driving is more natural in coast mode
         main.robot.set_brake_mode(False)
@@ -65,13 +66,13 @@ class DriveDistanceAction(Action):
         self.timeout_ms = timeout_ms
         self.start_time = 0
 
+    def locked_devices(self) -> LockedDeviceList:
+        # Returns a list of devices this action should take exclusive control of
+        return [main.robot.flmotor, main.robot.frmotor, 
+                main.robot.rlmotor, main.robot.rrmotor]
+
     def begin(self):
         # Run when the action is started
-        # If an action needs exclusive control of devices, lock them here
-        
-        # This action needs exclusive control of motors
-        self.lock_devices([main.robot.flmotor, main.robot.frmotor, 
-                main.robot.flmotor, main.robot.rrmotor])
 
         # Store the time this action started
         self.start_time = time.time()
@@ -125,10 +126,8 @@ class WaitTimeAction(Action):
         self.time_ms = time_ms
         self.start_time = 0
 
-
     def begin(self):
         # Run when the action is started
-        # If an action needs exclusive control of devices, lock them here
         
         self.start_time = time.time()
 
@@ -160,13 +159,13 @@ class RotateDegreesAction(Action):
         self.start_time = 0
         self.start_degrees = 0.0
 
+    def locked_devices(self) -> LockedDeviceList:
+        # Returns a list of devices this action should take exclusive control of
+        return [main.robot.flmotor, main.robot.frmotor, 
+                main.robot.rlmotor, main.robot.rrmotor]
+
     def begin(self):
         # Run when the action is started
-        # If an action needs exclusive control of devices, lock them here
-        
-        # This action needs exclusive control of motors
-        self.lock_devices([main.robot.flmotor, main.robot.frmotor, 
-                main.robot.flmotor, main.robot.rrmotor])
 
         # Store the time and angle
         self.start_time = time.time()

@@ -8,6 +8,26 @@ using namespace arpirobot;
 
 
 void Robot::robotStarted(){
+
+    Logger::logDebug("Motor Instance Addresses:");
+    Logger::logDebug("flmotor = " + std::to_string((intptr_t)&flmotor));
+    Logger::logDebug("frmotor = " + std::to_string((intptr_t)&frmotor));
+    Logger::logDebug("rlmotor = " + std::to_string((intptr_t)&rlmotor));
+    Logger::logDebug("rrmotor = " + std::to_string((intptr_t)&rrmotor));
+    
+    Logger::logNewline();
+
+    Logger::logDebug("Action Instance Addresses");
+    Logger::logDebug("--------------------------------------------------");
+    Logger::logDebug("jsDriveAction = " + std::to_string((intptr_t)&jsDriveAction));
+    Logger::logDebug("driveTwoFeetAction = " + std::to_string((intptr_t)&driveTwoFeetAction));
+    Logger::logDebug("rotatePos90Action = " + std::to_string((intptr_t)&rotatePos90Action));
+    Logger::logDebug("rotatePos120Action = " + std::to_string((intptr_t)&rotatePos120Action));
+    Logger::logDebug("rotateNeg270Action = " + std::to_string((intptr_t)&rotateNeg270Action));
+    Logger::logDebug("wait250Action = " + std::to_string((intptr_t)&wait250Action));
+    Logger::logDebug("autoSequence = " + std::to_string((intptr_t)&autoSequence));
+    Logger::logDebug("otherAutoSequence = " + std::to_string((intptr_t)&otherAutoSequence));
+
     // Setup axis transforms
     gp0.setAxisTransform(DRIVE_AXIS, std::make_shared<CubicAxisTransform>(0, 0.5));
     gp0.setAxisTransform(ROTATE_AXIS, std::make_shared<SquareRootAxisTransform>());
@@ -37,6 +57,7 @@ void Robot::robotStarted(){
 void Robot::robotEnabled(){
     // Allow auto sequence to be triggered when the robot is enabled
     ActionManager::addTrigger(autoTrigger);
+    ActionManager::addTrigger(otherAutoTrigger);
 
     // Enable joystick drive (by starting the action) when the robot is enabled
     ActionManager::startAction(jsDriveAction);
@@ -46,11 +67,15 @@ void Robot::robotDisabled(){
 
     // Don't allow auto sequence to be triggered when the robot is disabled
     ActionManager::removeTrigger(autoTrigger);
+    ActionManager::removeTrigger(otherAutoTrigger);
 
     // Disabling the robot also stops the auto routine
     // Forcefully stopping an ActionSeries will prevent it from running its finish action
     if(autoSequence.isRunning())
         ActionManager::stopAction(autoSequence);
+    
+    if(otherAutoSequence.isRunning())
+        ActionManager::stopAction(otherAutoSequence);
     
     if(jsDriveAction.isRunning())
         ActionManager::stopAction(jsDriveAction);
@@ -60,7 +85,15 @@ void Robot::robotDisabled(){
 }
 
 void Robot::enabledPeriodic(){
-
+    // Kill auto routines with a button
+    if(gp0.getButton(KILL_AUTO_BUTTON)){
+        if(autoSequence.isRunning())
+            ActionManager::stopAction(autoSequence);
+        if(otherAutoSequence.isRunning())
+            ActionManager::stopAction(otherAutoSequence);
+        if(!jsDriveAction.isRunning())
+            ActionManager::startAction(jsDriveAction);
+    }
 }
 
 void Robot::disabledPeriodic(){

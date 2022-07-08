@@ -51,8 +51,9 @@ class Robot(BaseRobot):
         self.js_drive_action = JSDriveAction()
         self.drive_two_feet_action = DriveDistanceAction(0.6, 100, 3000)
         self.rotate_pos_90_action = RotateDegreesAction(0.8, 90, 5000)
+        self.rotate_pos_120_action = RotateDegreesAction(0.8, 120, 5000)
         self.rotate_neg_270_action = RotateDegreesAction(0.8, -270, 5000)
-        self.wait_250_action = WaitTimeAction(250)
+        self.wait_250_action = WaitTimeAction(1000)
 
         # Action series (sequences of actions to run)
         self.auto_sequence = ActionSeries(
@@ -74,6 +75,27 @@ class Robot(BaseRobot):
             self.js_drive_action                    # When done, drive with joysticks again
         )
 
+        self.other_auto_sequence = ActionSeries(
+            # This is a list of actions to run sequentially
+            [
+                self.drive_two_feet_action,         # Drive 2 ft forward
+                self.wait_250_action,               # Wait a short amount of time so brake mode works
+                self.rotate_pos_120_action,         # Rotate 120 degrees
+                self.wait_250_action,               # Wait a short amount of time so brake mode works
+                self.drive_two_feet_action,         # Drive 2 ft forward
+                self.wait_250_action,               # Wait a short amount of time so brake mode works
+                self.rotate_pos_120_action,         # Rotate 120 degrees
+                self.wait_250_action,               # Wait a short amount of time so brake mode works
+                self.drive_two_feet_action,         # Drive 2 ft forward
+                self.wait_250_action,               # Wait a short amount of time so brake mode works
+                self.rotate_pos_120_action,         # Rotate 120 degrees
+                self.wait_250_action                # Wait a short amount of time so brake mode works
+            ],
+
+            # This action will run after the action series finishes
+            self.js_drive_action                    # When done, drive with joysticks again
+        )
+
         ########################################################################
         # Gamepad and controls
         ########################################################################
@@ -82,6 +104,8 @@ class Robot(BaseRobot):
         self.DRIVE_AXIS = 1
         self.ROTATE_AXIS = 2
         self.AUTO_BUTTON = 0
+        self.OTHER_AUTO_BUTTON = 1
+        self.KILL_AUTO_BUTTON = 3
 
         # Joystick values between -deadband and +deadband are treated as zero
         self.DEADBAND = 0.1
@@ -91,6 +115,7 @@ class Robot(BaseRobot):
 
         # Gamepad action triggers
         self.auto_trigger = ButtonPressedTrigger(self.gp0, self.AUTO_BUTTON, self.auto_sequence)
+        self.other_auto_trigger = ButtonPressedTrigger(self.gp0, self.OTHER_AUTO_BUTTON, self.other_auto_sequence)
 
     def robot_started(self):
         # Run once when the robot starts
@@ -114,6 +139,10 @@ class Robot(BaseRobot):
         # Once begin is called, no more devices can be added
         self.arduino.begin()
 
+        # Calibrate IMU to reduce drift
+        # Robot must be stationary during calibration and negative Y axis must be down
+        self.imu.calibrate(5)
+
         # Show motor battery voltage in DS
         self.vmon.make_main_vmon()
 
@@ -122,6 +151,7 @@ class Robot(BaseRobot):
         
         # Allow auto sequence to be triggered when the robot is enabled
         ActionManager.add_trigger(self.auto_trigger)
+        ActionManager.add_trigger(self.other_auto_trigger)
 
         # Enable joystick drive (by starting the action) when the robot is enabled
         ActionManager.start_action(self.js_drive_action)
@@ -131,11 +161,15 @@ class Robot(BaseRobot):
         
         # Don't allow auto sequence to be triggered when the robot is disabled
         ActionManager.remove_trigger(self.auto_trigger)
+        ActionManager.remove_trigger(self.other_auto_trigger)
 
         # Disabling the robot also stops the auto routine
         # Forcefully stopping an ActionSeries will prevent it from running it's finish action
         if(self.auto_sequence.is_running()):
             ActionManager.stop_action(self.auto_sequence)
+
+        if(self.other_auto_sequence.is_running()):
+            ActionManager.stop_action(self.other_auto_sequence)
         
         if(self.js_drive_action.is_running()):
             ActionManager.stop_action(self.js_drive_action)
@@ -145,7 +179,16 @@ class Robot(BaseRobot):
 
     def enabled_periodic(self):
         # Runs periodically while the robot is enabled
-        pass
+        
+        # Kill auto routines with a button
+        if(self.gp0.get_button(self.KILL_AUTO_BUTTON)):
+            if(self.auto_sequence.is_running()):
+                ActionManager.stop_action(self.auto_sequence)
+            if(self.other_auto_sequence.is_running()):
+                ActionManager.stop_action(self.other_auto_sequence)
+            if(not self.js_drive_action.is_running()):
+                ActionManager.start_action(self.js_drive_action)
+            
 
     def disabled_periodic(self):
         # Runs periodically while the robot is disabled

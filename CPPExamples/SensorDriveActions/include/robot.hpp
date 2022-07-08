@@ -85,6 +85,7 @@ public:
     JSDriveAction jsDriveAction;
     DriveDistanceAction driveTwoFeetAction { 0.6, 100, 3000 };
     RotateDegreesAction rotatePos90Action { 0.8, 90, 5000 };
+    RotateDegreesAction rotatePos120Action { 0.8, 120, 5000 };
     RotateDegreesAction rotateNeg270Action { 0.8, -270, 5000 };
     WaitTimeAction wait250Action { 250 };
     
@@ -108,6 +109,27 @@ public:
         jsDriveAction                   // When done, drive with joysticks again
     };
 
+    ActionSeries otherAutoSequence {
+        // This is a list of actions to run sequentially
+        {
+            driveTwoFeetAction,         // Drive 2 ft forward
+            wait250Action,              // Wait a short amount of time so brake mode works
+            rotatePos120Action,         // Rotate 120 degrees
+            wait250Action,              // Wait a short amount of time so brake mode works
+            driveTwoFeetAction,         // Drive 2 ft forward
+            wait250Action,              // Wait a short amount of time so brake mode works
+            rotatePos120Action,         // Rotate 120 degrees
+            wait250Action,              // Wait a short amount of time so brake mode works
+            driveTwoFeetAction,         // Drive 2 ft forward
+            wait250Action,              // Wait a short amount of time so brake mode works
+            rotatePos120Action,         // Rotate 120 degrees
+            wait250Action               // Wait a short amount of time so brake mode works
+        },     
+
+        // This action will run after the action series finishes     
+        jsDriveAction                   // When done, drive with joysticks again
+    };
+
     ////////////////////////////////////////////////////////////////////////////
     /// Gamepad and controls
     ////////////////////////////////////////////////////////////////////////////
@@ -116,6 +138,8 @@ public:
     const int DRIVE_AXIS = 1;
     const int ROTATE_AXIS = 2;
     const int AUTO_BUTTON = 0;
+    const int OTHER_AUTO_BUTTON = 1;
+    const int KILL_AUTO_BUTTON = 3;
 
     // Joystick values beteween -deadband and +deadband are treated as zero
     const double DEADBAND = 0.1;
@@ -125,4 +149,5 @@ public:
 
     // Gamepad action triggers
     ButtonPressedTrigger autoTrigger { gp0, AUTO_BUTTON, autoSequence };
+    ButtonPressedTrigger otherAutoTrigger { gp0, OTHER_AUTO_BUTTON, otherAutoSequence };
 };

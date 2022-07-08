@@ -9,13 +9,17 @@ using namespace arpirobot;
 /// JSDriveAction
 ////////////////////////////////////////////////////////////////////////////////
 
-void JSDriveAction::begin(){
+LockedDeviceList JSDriveAction::lockedDevices(){
     // Only one action can lock a device at a time
     // The newest action keeps control of the device. 
     // Any other action that had previously locked the device will be stopped.
     // This ensures that only one action will ever attempt to control the motors at any given time
-    lockDevices({Main::robot->flmotor, Main::robot->frmotor, 
-            Main::robot->rlmotor, Main::robot->rrmotor});
+    return { Main::robot->flmotor, Main::robot->frmotor, 
+            Main::robot->rlmotor, Main::robot->rrmotor };
+}
+
+void JSDriveAction::begin(){
+    
 }
 
 void JSDriveAction::process(){

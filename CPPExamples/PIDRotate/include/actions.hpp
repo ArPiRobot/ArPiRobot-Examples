@@ -12,8 +12,10 @@ using namespace arpirobot;
  */
 class JSDriveAction : public Action {
 protected:
-    // Run when the action is started. 
     // If an action needs exclusive control of devices, lock them here
+    LockedDeviceList lockedDevices() override;
+
+    // Run when the action is started. 
     void begin() override;
 
     // Run periodically while the action is running
@@ -37,8 +39,10 @@ public:
     RotateAction(double degrees);
 
 protected:
-    // Run when the action is started. 
     // If an action needs exclusive control of devices, lock them here
+    LockedDeviceList lockedDevices() override;
+
+    // Run when the action is started. 
     void begin() override;
 
     // Run periodically while the action is running

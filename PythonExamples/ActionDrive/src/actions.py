@@ -1,4 +1,4 @@
-from arpirobot.core.action import Action
+from arpirobot.core.action import Action, LockedDeviceList
 from arpirobot.core.log import Logger
 import main
 
@@ -8,16 +8,20 @@ import main
 ## interrupted either by using ActionManager::stopAction or if another action is started that takes
 ## control of a device that this action used
 class JSDriveAction(Action):
-    def begin(self):
-        # Run when the action is started
+    def locked_devices(self) -> LockedDeviceList:
         # If an action needs exclusive control of devices, lock them here
-        
+
         # Only one action can lock a device at a time
         # The newest action keeps control of the device. 
         # Any other action that had previously locked the device will be stopped.
         # This ensures that only one action will ever attempt to control the motors at any given time
-        self.lock_devices([main.robot.flmotor, main.robot.frmotor, 
-                main.robot.rlmotor, main.robot.rrmotor])
+        return [ main.robot.flmotor, main.robot.frmotor, 
+                main.robot.rlmotor, main.robot.rrmotor ]
+
+    def begin(self):
+        # Run when the action is started
+        
+        pass
 
     def process(self):
         # Run periodically while the action is running

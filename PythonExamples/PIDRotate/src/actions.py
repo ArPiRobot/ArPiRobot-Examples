@@ -1,4 +1,4 @@
-from arpirobot.core.action import Action
+from arpirobot.core.action import Action, LockedDeviceList
 from arpirobot.core.log import Logger
 import main
 import time
@@ -9,13 +9,15 @@ import time
 # interrupted either by using ActionManager::stopAction or if another action is started that takes
 # control of a device that this action used
 class JSDriveAction(Action):
-    def begin(self):
+    def locked_devices(self) -> LockedDeviceList:
         # Only one action can lock a device at a time
         # The newest action keeps control of the device. 
         # Any other action that had previously locked the device will be stopped.
         # This ensures that only one action will ever attempt to control the motors at any given time
-        self.lock_devices([main.robot.flmotor, main.robot.frmotor, main.robot.rlmotor, main.robot.rrmotor])
-
+        return [ main.robot.flmotor, main.robot.frmotor, 
+                main.robot.rlmotor, main.robot.rrmotor ]
+    
+    def begin(self):
         # Coast mode is more natural for human driving
         main.robot.set_brake_mode(False)
     
@@ -48,13 +50,15 @@ class RotateAction(Action):
         self.degrees = degrees
         self.correct_counter = 0
 
-    def begin(self):
+    def locked_devices(self) -> LockedDeviceList:
         # Only one action can lock a device at a time
         # The newest action keeps control of the device. 
         # Any other action that had previously locked the device will be stopped.
         # This ensures that only one action will ever attempt to control the motors at any given time
-        self.lock_devices([main.robot.flmotor, main.robot.frmotor, main.robot.rlmotor, main.robot.rrmotor])
+        return [ main.robot.flmotor, main.robot.frmotor, 
+                main.robot.rlmotor, main.robot.rrmotor ]
 
+    def begin(self):
         # Reset correct counter
         self.correct_counter = 0
 

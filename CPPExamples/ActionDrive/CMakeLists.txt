@@ -10,7 +10,14 @@ else()
 endif()
 
 include_directories(${HOMEDIR}/.arpirobot/corelib/include ${PROJECT_SOURCE_DIR}/include)
-link_directories(${HOMEDIR}/.arpirobot/corelib/lib)
+
+if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "arm")
+     link_directories(${HOMEDIR}/.arpirobot/corelib/lib/armv6)
+elseif("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "aarch64")
+     link_directories(${HOMEDIR}/.arpirobot/corelib/lib/aarch64)
+else()
+     message(FATAL_ERROR "Unknown architecture for linking libraries.")
+endif()
 
 file (GLOB_RECURSE SOURCES
      ${PROJECT_SOURCE_DIR}/src/*.c
@@ -26,6 +33,6 @@ if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") OR ("${CMAKE_SYSTEM_NAME}" STREQUAL
      target_link_libraries(robot serial)
 endif()
 
-if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") AND ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "arm"))
+if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") AND (("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "arm") OR ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "aarch64")))
      target_link_libraries(robot pigpio)
 endif()

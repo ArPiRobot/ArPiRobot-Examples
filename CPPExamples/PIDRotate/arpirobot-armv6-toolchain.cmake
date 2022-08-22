@@ -14,6 +14,7 @@ set(cxx_compiler g++)
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
+set(CMAKE_SYSROOT "${standalone_toolchain}/${target_host}/sysroot")
 set(CMAKE_C_COMPILER "${standalone_toolchain}/bin/${target_host}-${cc_compiler}${EXTENSION}" CACHE PATH "C Compiler")
 set(CMAKE_CXX_COMPILER "${standalone_toolchain}/bin/${target_host}-${cxx_compiler}${EXTENSION}" CACHE PATH "C++ Compiler")
 

@@ -36,3 +36,7 @@ endif()
 if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") AND (("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "arm") OR ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "aarch64")))
      target_link_libraries(robot pigpio)
 endif()
+
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+     target_link_libraries(robot libsoc)
+endif()

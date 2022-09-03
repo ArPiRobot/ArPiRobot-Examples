@@ -5,7 +5,7 @@
         "main.sh"
     ],
     "coreLibFiles": [
-        "lib/*.so",
+        "lib/*",
         "python_bindings/arpirobot/"
     ]
 }

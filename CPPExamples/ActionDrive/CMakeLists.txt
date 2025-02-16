@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.20)
 project (ArPiRobot-UserRobot)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -28,15 +28,3 @@ file (GLOB_RECURSE SOURCES
 
 add_executable(robot ${SOURCES})
 target_link_libraries(robot arpirobot-core pthread)
-
-if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") OR ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows") OR ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin"))
-     target_link_libraries(robot serial)
-endif()
-
-if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") AND (("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "arm") OR ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "aarch64")))
-     target_link_libraries(robot pigpio)
-endif()
-
-if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-     target_link_libraries(robot soc)
-endif()

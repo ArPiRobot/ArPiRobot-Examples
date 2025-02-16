@@ -1,13 +1,13 @@
 #pragma once
 
-#include <arpirobot/core/robot/BaseRobot.hpp>
+#include <arpirobot/robot/BaseRobot.hpp>
 
-#include <arpirobot/core/drive/ArcadeDriveHelper.hpp>
-#include <arpirobot/core/drive/CubicAxisTransform.hpp>
-#include <arpirobot/core/drive/SquareRootAxisTransform.hpp>
+#include <arpirobot/drive/ArcadeDriveHelper.hpp>
+#include <arpirobot/drive/CubicAxisTransform.hpp>
+#include <arpirobot/drive/SquareRootAxisTransform.hpp>
 
-#include <arpirobot/devices/gamepad/Gamepad.hpp>
-#include <arpirobot/devices/adafruitmotorhat/AdafruitMotorHatMotor.hpp>
+#include <arpirobot/device/gamepad/Gamepad.hpp>
+#include <arpirobot/device/adafruitmotorhat/AdafruitMotorHatMotor.hpp>
 
 using namespace arpirobot;
 
@@ -15,8 +15,11 @@ using namespace arpirobot;
 class Robot : public BaseRobot{
 public:
     
-    // Run when the robot starts
+    // Run when the robot program starts
     void robotStarted();
+
+    // Run when the robot program stops
+    void robotStopped();
 
     // Runs once each time the robot becomes enabled
     void robotEnabled();

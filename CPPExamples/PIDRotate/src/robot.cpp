@@ -1,8 +1,8 @@
 #include <robot.hpp>
 
-#include <arpirobot/core/log/Logger.hpp>
-#include <arpirobot/core/action/ActionManager.hpp>
-#include <arpirobot/core/network/NetworkTable.hpp>
+#include <arpirobot/log/Logger.hpp>
+#include <arpirobot/action/ActionManager.hpp>
+#include <arpirobot/network/NetworkTable.hpp>
 
 using namespace arpirobot;
 
@@ -36,6 +36,10 @@ void Robot::robotStarted(){
     // same devices. When rotate is done, js drive is 
     // restarted to allow more driving
     ActionManager::addTrigger(std::make_shared<ButtonPressedTrigger>(gp0, ROTATE_BTN, rotateSer));
+}
+
+void Robot::robotStopped(){
+    
 }
 
 void Robot::robotEnabled(){

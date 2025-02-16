@@ -1,6 +1,6 @@
 #pragma once
 
-#include <arpirobot/core/robot/BaseRobot.hpp>
+#include <arpirobot/robot/BaseRobot.hpp>
 
 #include <actions.hpp>
 

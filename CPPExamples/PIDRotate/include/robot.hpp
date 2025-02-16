@@ -1,18 +1,18 @@
 #pragma once
 
-#include <arpirobot/core/robot/BaseRobot.hpp>
+#include <arpirobot/robot/BaseRobot.hpp>
 
 #include <actions.hpp>
 
 // Other includes (for devices and other objects) here
-#include <arpirobot/core/control/PID.hpp>
-#include <arpirobot/core/action/ActionSeries.hpp>
-#include <arpirobot/devices/adafruitmotorhat/AdafruitMotorHatMotor.hpp>
-#include <arpirobot/core/drive/ArcadeDriveHelper.hpp>
-#include <arpirobot/devices/gamepad/Gamepad.hpp>
-#include <arpirobot/devices/gamepad/ButtonPressedTrigger.hpp>
-#include <arpirobot/core/drive/CubicAxisTransform.hpp>
-#include <arpirobot/core/drive/SquareRootAxisTransform.hpp>
+#include <arpirobot/control/PID.hpp>
+#include <arpirobot/action/ActionSeries.hpp>
+#include <arpirobot/device/adafruitmotorhat/AdafruitMotorHatMotor.hpp>
+#include <arpirobot/drive/ArcadeDriveHelper.hpp>
+#include <arpirobot/device/gamepad/Gamepad.hpp>
+#include <arpirobot/device/gamepad/ButtonPressedTrigger.hpp>
+#include <arpirobot/drive/CubicAxisTransform.hpp>
+#include <arpirobot/drive/SquareRootAxisTransform.hpp>
 #include <arpirobot/arduino/iface/ArduinoUartInterface.hpp>
 #include <arpirobot/arduino/sensor/Mpu6050Imu.hpp>
 
@@ -23,8 +23,11 @@ using namespace arpirobot;
 class Robot : public BaseRobot{
 public:
     
-    // Run when the robot starts
+    // Run when the robot program starts
     void robotStarted();
+
+    // Run when the robot program stops
+    void robotStopped();
 
     // Runs once each time the robot becomes enabled
     void robotEnabled();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <arpirobot/core/action/Action.hpp>
+#include <arpirobot/action/Action.hpp>
 
 using namespace arpirobot;
 

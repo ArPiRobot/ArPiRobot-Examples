@@ -1,8 +1,8 @@
 #include <robot.hpp>
 
-#include <arpirobot/core/log/Logger.hpp>
-#include <arpirobot/core/action/ActionManager.hpp>
-#include <arpirobot/core/network/NetworkTable.hpp>
+#include <arpirobot/log/Logger.hpp>
+#include <arpirobot/action/ActionManager.hpp>
+#include <arpirobot/network/NetworkTable.hpp>
 
 using namespace arpirobot;
 
@@ -52,6 +52,10 @@ void Robot::robotStarted(){
 
     // Show motor battery voltage in DS
     vmon.makeMainVmon();
+}
+
+void Robot::robotStopped(){
+    
 }
 
 void Robot::robotEnabled(){

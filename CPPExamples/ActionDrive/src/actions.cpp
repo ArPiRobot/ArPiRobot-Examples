@@ -1,5 +1,5 @@
 #include <actions.hpp>
-#include <arpirobot/core/log/Logger.hpp>
+#include <arpirobot/log/Logger.hpp>
 #include <main.hpp>
 
 using namespace arpirobot;

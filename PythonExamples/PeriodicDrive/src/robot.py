@@ -5,8 +5,8 @@ from arpirobot.network import NetworkTable
 
 from arpirobot.drive import ArcadeDriveHelper, CubicAxisTransform, SquareRootAxisTransform
 
-from arpirobot.device.gamepad import Gamepad
-from arpirobot.device.adafruitmotorhat import AdafruitMotorHatMotor
+from arpirobot.devices.gamepad import Gamepad
+from arpirobot.devices.adafruitmotorhat import AdafruitMotorHatMotor
 
 
 class Robot(BaseRobot):

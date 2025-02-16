@@ -6,9 +6,9 @@ from arpirobot.network import NetworkTable
 
 from arpirobot.drive import ArcadeDriveHelper, CubicAxisTransform, SquareRootAxisTransform
 
-from arpirobot.device.gamepad import Gamepad, ButtonPressedTrigger
-from arpirobot.device.adafruitmotorhat import AdafruitMotorHatMotor
-from arpirobot.device.gpio import StatusLED
+from arpirobot.devices.gamepad import Gamepad, ButtonPressedTrigger
+from arpirobot.devices.adafruitmotorhat import AdafruitMotorHatMotor
+from arpirobot.devices.gpio import StatusLED
 
 from arpirobot.arduino.iface import ArduinoUartInterface
 from arpirobot.arduino.sensor import VoltageMonitor, SingleEncoder, Mpu6050Imu

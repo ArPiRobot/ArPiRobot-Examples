@@ -1,12 +1,12 @@
-from arpirobot.core.robot import BaseRobot
-from arpirobot.core.log import Logger
-from arpirobot.core.action import ActionManager
-from arpirobot.core.network import NetworkTable
+from arpirobot.robot import BaseRobot
+from arpirobot.log import Logger
+from arpirobot.action import ActionManager
+from arpirobot.network import NetworkTable
 
-from arpirobot.core.drive import ArcadeDriveHelper, CubicAxisTransform, SquareRootAxisTransform
+from arpirobot.drive import ArcadeDriveHelper, CubicAxisTransform, SquareRootAxisTransform
 
-from arpirobot.devices.gamepad import Gamepad
-from arpirobot.devices.adafruitmotorhat import AdafruitMotorHatMotor
+from arpirobot.device.gamepad import Gamepad
+from arpirobot.device.adafruitmotorhat import AdafruitMotorHatMotor
 
 from actions import JSDriveAction
 
@@ -41,7 +41,7 @@ class Robot(BaseRobot):
         self.DEADBAND = 0.1
 
     def robot_started(self):
-        # Run once when the robot starts
+        # Run once when the robot program starts
         
         # Setup axis transforms
         self.gp0.set_axis_transform(self.DRIVE_AXIS, CubicAxisTransform(0, 0.5))
@@ -54,6 +54,10 @@ class Robot(BaseRobot):
         # Start this action when the robot starts
         # It will keep running unless interrupted
         ActionManager.start_action(JSDriveAction())
+
+    def robot_stopped(self):
+        # Run once when robot program stops
+        pass
 
     def robot_enabled(self):
         # Runs once each time the robot becomes enabled

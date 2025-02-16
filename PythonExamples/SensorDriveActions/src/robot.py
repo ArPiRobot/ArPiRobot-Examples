@@ -1,14 +1,14 @@
 from actions import DriveDistanceAction, JSDriveAction, RotateDegreesAction, WaitTimeAction
-from arpirobot.core.robot import BaseRobot
-from arpirobot.core.log import Logger
-from arpirobot.core.action import ActionManager, ActionSeries
-from arpirobot.core.network import NetworkTable
+from arpirobot.robot import BaseRobot
+from arpirobot.log import Logger
+from arpirobot.action import ActionManager, ActionSeries
+from arpirobot.network import NetworkTable
 
-from arpirobot.core.drive import ArcadeDriveHelper, CubicAxisTransform, SquareRootAxisTransform
+from arpirobot.drive import ArcadeDriveHelper, CubicAxisTransform, SquareRootAxisTransform
 
-from arpirobot.devices.gamepad import Gamepad, ButtonPressedTrigger
-from arpirobot.devices.adafruitmotorhat import AdafruitMotorHatMotor
-from arpirobot.devices.gpio import StatusLED
+from arpirobot.device.gamepad import Gamepad, ButtonPressedTrigger
+from arpirobot.device.adafruitmotorhat import AdafruitMotorHatMotor
+from arpirobot.device.gpio import StatusLED
 
 from arpirobot.arduino.iface import ArduinoUartInterface
 from arpirobot.arduino.sensor import VoltageMonitor, SingleEncoder, Mpu6050Imu
@@ -118,7 +118,7 @@ class Robot(BaseRobot):
         self.other_auto_trigger = ButtonPressedTrigger(self.gp0, self.OTHER_AUTO_BUTTON, self.other_auto_sequence)
 
     def robot_started(self):
-        # Run once when the robot starts
+        # Run once when the robot program starts
         # Configure devices here
         
         # Setup axis transforms
@@ -145,6 +145,10 @@ class Robot(BaseRobot):
 
         # Show motor battery voltage in DS
         self.vmon.make_main_vmon()
+
+    def robot_stopped(self):
+        # Run once when robot program stops
+        pass
 
     def robot_enabled(self):
         # Runs once each time the robot becomes enabled

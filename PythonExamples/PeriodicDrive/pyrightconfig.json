@@ -1,0 +1,9 @@
+{
+    "include": [
+        "src"
+    ],
+    "typeCheckingMode": "off",
+    "reportGeneralTypeIssues": false,
+    "reportCallIssue": false,
+    "pythonVersion": "3.11"
+}

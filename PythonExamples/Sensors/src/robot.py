@@ -1,7 +1,7 @@
-from arpirobot.core.robot import BaseRobot
-from arpirobot.core.log import Logger
-from arpirobot.core.action import ActionManager
-from arpirobot.core.network import NetworkTable
+from arpirobot.robot import BaseRobot
+from arpirobot.log import Logger
+from arpirobot.action import ActionManager
+from arpirobot.network import NetworkTable
 
 from arpirobot.arduino.iface import ArduinoUartInterface
 from arpirobot.arduino.sensor import VoltageMonitor, SingleEncoder, Mpu6050Imu, Ultrasonic4Pin, IRReflectorModule
@@ -54,7 +54,7 @@ class Robot(BaseRobot):
         self.rdetector = IRReflectorModule(12)
 
     def robot_started(self):
-        # Run once when the robot starts
+        # Run once when the robot program starts
 
         # Each sensor is instantiated, but not associated with an arduino yet.
         # Each sensor must be added to exactly one arduino interface.
@@ -77,6 +77,10 @@ class Robot(BaseRobot):
 
         # The main vmon will show the voltage in the drive station's battery indicator
         self.vmon.make_main_vmon()
+
+    def robot_stopped(self):
+        # Run once when robot program stops
+        pass
 
     def robot_enabled(self):
         # Runs once each time the robot becomes enabled

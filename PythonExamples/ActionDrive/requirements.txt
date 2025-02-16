@@ -1,0 +1,2 @@
+arpirobot-corelib @ file://localhost/${HOME}/.arpirobot/corelib/python_bindings/; platform_system != 'Windows'
+arpirobot-corelib @ file://localhost/${USERPROFILE}/.arpirobot/corelib/python_bindings; platform_system == 'Windows'

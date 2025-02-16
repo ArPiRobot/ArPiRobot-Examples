@@ -1,15 +1,15 @@
-from arpirobot.core.robot import BaseRobot
-from arpirobot.core.log import Logger
-from arpirobot.core.action import ActionManager, ActionSeries
-from arpirobot.core.network import NetworkTable
+from arpirobot.robot import BaseRobot
+from arpirobot.log import Logger
+from arpirobot.action import ActionManager, ActionSeries
+from arpirobot.network import NetworkTable
 
 # Import devices and other things here
 from arpirobot.arduino.sensor import Mpu6050Imu
 from arpirobot.arduino.iface import ArduinoUartInterface
-from arpirobot.devices.adafruitmotorhat import AdafruitMotorHatMotor
-from arpirobot.core.drive import ArcadeDriveHelper, SquareRootAxisTransform, CubicAxisTransform
-from arpirobot.devices.gamepad import Gamepad, ButtonPressedTrigger
-from arpirobot.core.control import PID
+from arpirobot.device.adafruitmotorhat import AdafruitMotorHatMotor
+from arpirobot.drive import ArcadeDriveHelper, SquareRootAxisTransform, CubicAxisTransform
+from arpirobot.device.gamepad import Gamepad, ButtonPressedTrigger
+from arpirobot.control import PID
 
 # Import actions here
 from actions import JSDriveAction, RotateAction
@@ -71,7 +71,7 @@ class Robot(BaseRobot):
         self.rotate_pid = PID(0.1, 0.0001, 0.01)
 
     def robot_started(self):
-        # Run once when the robot starts
+        # Run once when the robot program starts
         # Configure devices here
         
         # Setup arduino and IMU
@@ -103,6 +103,9 @@ class Robot(BaseRobot):
         # restarted to allow more driving
         ActionManager.add_trigger(ButtonPressedTrigger(self.gp0, self.ROTATE_BTN, self.rotate_ser))
 
+    def robot_stopped(self):
+        # Run once when robot program stops
+        pass
 
     def robot_enabled(self):
         # Runs once each time the robot becomes enabled

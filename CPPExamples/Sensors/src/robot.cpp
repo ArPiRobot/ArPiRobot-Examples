@@ -33,6 +33,10 @@ void Robot::robotStarted(){
     vmon.makeMainVmon();
 }
 
+void Robot::robotStopped(){
+
+}
+
 void Robot::robotEnabled(){
 
 }

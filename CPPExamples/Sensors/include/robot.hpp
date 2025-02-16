@@ -18,8 +18,11 @@ using namespace arpirobot;
 class Robot : public BaseRobot{
 public:
     
-    // Run when the robot starts
+    // Run when the robot program starts
     void robotStarted();
+
+    // Run when the robot program stops
+    void robotStopped();
 
     // Runs once each time the robot becomes enabled
     void robotEnabled();

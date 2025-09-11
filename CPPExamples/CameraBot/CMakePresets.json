@@ -1,0 +1,90 @@
+{
+    "version": 2,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "armv6-debug",
+            "displayName": "armv6 (Debug)",
+            "description": "Targeting armv6 systems",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/arpirobot-armv6-toolchain.cmake",
+                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {},
+            "vendor": {}
+        },
+        {
+            "name": "armv6-release",
+            "displayName": "armv6 (Release)",
+            "description": "Targeting armv6 systems",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/arpirobot-armv6-toolchain.cmake",
+                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "environment": {},
+            "vendor": {}
+        },
+        
+        {
+            "name": "aarch64-debug",
+            "displayName": "aarch64 (Debug)",
+            "description": "Targeting aarch64 systems",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/arpirobot-aarch64-toolchain.cmake",
+                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {},
+            "vendor": {}
+        },
+        {
+            "name": "aarch64-release",
+            "displayName": "aarch64 (Release)",
+            "description": "Targeting aarch64 systems",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/arpirobot-aarch64-toolchain.cmake",
+                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "environment": {},
+            "vendor": {}
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "armv6-debug",
+            "displayName": "armv6 (Debug)",
+            "configurePreset": "armv6-debug"
+        },
+        {
+            "name": "armv6-release",
+            "displayName": "armv6 (Release)",
+            "configurePreset": "armv6-release"
+        },
+
+        {
+            "name": "aarch64-debug",
+            "displayName": "aarch64 (Debug)",
+            "configurePreset": "aarch64-debug"
+        },
+        {
+            "name": "aarch64-release",
+            "displayName": "aarch64 (Release)",
+            "configurePreset": "aarch64-release"
+        }
+    ]
+}

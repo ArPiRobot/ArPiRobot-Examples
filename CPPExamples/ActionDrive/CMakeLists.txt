@@ -26,5 +26,8 @@ file (GLOB_RECURSE SOURCES
      ${PROJECT_SOURCE_DIR}/include/*.hpp
 )
 
+find_package(OpenCV REQUIRED core)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GSTREAMER REQUIRED IMPORTED_TARGET gstreamer-1.0)
 add_executable(robot ${SOURCES})
-target_link_libraries(robot arpirobot-core pthread)
+target_link_libraries(robot arpirobot-core pthread opencv_core PkgConfig::GSTREAMER)

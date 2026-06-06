@@ -34,8 +34,8 @@ void Robot::robotStarted(){
     vmon.makeMainVmon();
 
     // Start streaming camera live
-    cam0.setCaptureMode("1024x768@30/1");
-    // cam0.setCaptureMode("640x480@30/1");
+    // cam0.setCaptureMode("1024x768@30/1");
+    cam0.setCaptureMode("640x480@30/1");
     cam0.setExtraOption("rotation", "180");
     cam0.setExtraOption("gain", "30");
     cam0.setHwAccel(true, false, false);
